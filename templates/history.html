@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Dashboard - Adidas Authentication</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d6cf2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101722",
+                    },
+                    fontFamily: {
+                        "display": ["Roboto", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+
+            <!-- HEADER -->
+            <header
+                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 py-4 lg:px-40 bg-white dark:bg-slate-900">
+                <div class="flex items-center gap-4 text-slate-900 dark:text-slate-100">
+                    <a href="/" class="flex items-center gap-3">
+                        <img src="{{ url_for('static', filename='logo_webapp.png') }}" alt="Logo"
+                            class="h-10 w-auto rounded-lg">
+                    </a>
+                    <a href="/">
+                        <h2
+                            class="text-lg font-bold leading-tight tracking-[-0.015em] hover:text-primary transition-colors">
+                            Adidas Authenticator</h2>
+                    </a>
+                </div>
+                <div class="flex gap-2 relative">
+                    <button onclick="shareResults()"
+                        class="flex cursor-pointer items-center justify-center rounded-xl h-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-3 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">share</span>
+                    </button>
+                    <!-- Dropdown Button -->
+                    <button onclick="toggleDropdown()"
+                        class="flex cursor-pointer items-center justify-center rounded-xl h-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-3 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">more_horiz</span>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div id="options-dropdown"
+                        class="hidden absolute right-0 top-12 mt-2 w-56 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 z-50 overflow-hidden text-sm">
+                        <div class="py-1">
+                            <a href="/"
+                                class="flex items-center gap-2 px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">home</span>
+                                <span class="font-medium">Home</span>
+                            </a>
+                            <a href="/scan"
+                                class="flex items-center gap-2 px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">document_scanner</span>
+                                <span class="font-medium">Scan Sneaker</span>
+                            </a>
+                            <a href="/history"
+                                class="flex items-center gap-2 px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors bg-slate-50 dark:bg-slate-700/30">
+                                <span class="material-symbols-outlined text-[18px]">history</span>
+                                <span class="font-medium text-primary">My Dashboard / History</span>
+                            </a>
+                            <a href="/login"
+                                class="flex items-center gap-2 px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">login</span>
+                                <span class="font-medium">Sign in / Login</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="px-6 lg:px-40 py-8 flex justify-center">
+                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="size-12 flex items-center justify-center bg-primary/10 text-primary rounded-xl">
+                            <span class="material-symbols-outlined text-3xl">history</span>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">Scan
+                                History</h1>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium pr-4">Review your
+                                previously authenticated items</p>
+                        </div>
+                        <a href="/scan"
+                            class="ml-auto flex items-center gap-2 bg-primary text-white px-4 py-2 hover:opacity-90 transition-opacity rounded-lg text-sm font-bold shadow-sm">
+                            <span class="material-symbols-outlined text-[18px]">add</span> New Scan
+                        </a>
+                    </div>
+
+                    <!-- History Items Dashboard Grid -->
+                    {% if history %}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for item in history %}
+                        <div
+                            class="flex flex-col rounded-xl bg-white dark:bg-slate-900 overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow group cursor-pointer">
+                            <div class="h-48 bg-slate-100 dark:bg-slate-800 bg-center bg-cover bg-no-repeat relative"
+                                style="background-image: url('{{ url_for('static', filename='uploads/' + item.image) }}');">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+
+                                {% if 'GENUINE' in item.auth_res | upper %}
+                                <div
+                                    class="absolute top-4 right-4 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1 uppercase tracking-wide shadow-sm">
+                                    <span class="material-symbols-outlined text-[12px] filled">check_circle</span>
+                                    Genuine
+                                </div>
+                                {% elif 'UNCERTAIN' in item.auth_res | upper %}
+                                <div
+                                    class="absolute top-4 right-4 bg-amber-500 text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1 uppercase tracking-wide shadow-sm">
+                                    <span class="material-symbols-outlined text-[12px] filled">warning</span> Uncertain
+                                </div>
+                                {% else %}
+                                <div
+                                    class="absolute top-4 right-4 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1 uppercase tracking-wide shadow-sm">
+                                    <span class="material-symbols-outlined text-[12px] filled">cancel</span> Counterfeit
+                                </div>
+                                {% endif %}
+
+                                <div class="absolute bottom-4 left-4 text-white">
+                                    <h3 class="font-bold text-lg leading-tight drop-shadow-md">{{ item.model }}</h3>
+                                    <p class="text-xs font-medium opacity-90 text-slate-100 drop-shadow-md">Scanned {{
+                                        item.timestamp }}</p>
+                                </div>
+                            </div>
+                            <div class="p-4 flex gap-4">
+                                <div class="flex flex-col flex-1">
+                                    <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">AI
+                                        Confidence</span>
+                                    <span class="text-slate-900 dark:text-white font-bold text-lg 
+                                            {% if 'GENUINE' not in item.auth_res | upper %}text-red-500{% endif %}">
+                                        {{ item.auth_conf }}
+                                    </span>
+                                </div>
+                                <div class="w-px bg-slate-100 dark:bg-slate-800"></div>
+                                <div class="flex flex-col flex-1 pl-2">
+                                    <span
+                                        class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Colorway</span>
+                                    <span class="text-slate-900 dark:text-white font-bold text-sm mt-0.5 truncate">{{
+                                        item.color }}</span>
+                                </div>
+                                <div
+                                    class="flex items-center text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <span class="material-symbols-outlined">arrow_forward_ios</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div
+                        class="flex flex-col items-center justify-center p-12 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-slate-50 dark:bg-slate-800/30">
+                        <div
+                            class="size-16 flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-full mb-4">
+                            <span class="material-symbols-outlined text-4xl">history_toggle_off</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">No scans yet</h3>
+                        <p class="text-slate-500 dark:text-slate-400 max-w-sm">When you authenticate a sneaker, your
+                            results will be saved here for future reference.</p>
+                        <a href="/scan"
+                            class="mt-6 px-6 py-2 bg-primary text-white font-bold rounded-xl hover:bg-blue-600 transition-colors">Start
+                            your first scan</a>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </main>
+
+            <footer
+                class="mt-auto py-8 text-center text-slate-400 text-sm border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <p>Powered by AI Authentication System</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Toggle dropdown visibility
+        function toggleDropdown() {
+            const dropdown = document.getElementById('options-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const dropdown = document.getElementById('options-dropdown');
+            const button = event.target.closest('button');
+
+            if (!dropdown.classList.contains('hidden') &&
+                (!button || button.getAttribute('onclick') !== 'toggleDropdown()') &&
+                !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Share Feature
+        function shareResults() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Dashboard - Adidas Authentication',
+                    url: window.location.href
+                })
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Dashboard link copied to clipboard!');
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

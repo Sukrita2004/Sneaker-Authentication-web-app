@@ -1,0 +1,11 @@
+__pycache__/
+.DS_Store
+*.pyc
+.env
+.venv/
+venv/
+node_modules/
+.idea/
+.vscode/
+static/uploads/
+suta/

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>How to use - Adidas Authentication</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d6cf2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101722",
+                    },
+                    fontFamily: {
+                        "display": ["Roboto", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+
+            <!-- HEADER -->
+            <header
+                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 py-4 lg:px-40 bg-white dark:bg-slate-900">
+                <div class="flex items-center gap-4 text-slate-900 dark:text-slate-100">
+                    <a href="/" class="flex items-center gap-3">
+                        <img src="{{ url_for('static', filename='logo_webapp.png') }}" alt="Logo"
+                            class="h-10 w-auto rounded-lg">
+                    </a>
+                    <a href="/">
+                        <h2
+                            class="text-lg font-bold leading-tight tracking-[-0.015em] hover:text-primary transition-colors">
+                            Adidas Authenticator</h2>
+                    </a>
+                </div>
+                <div class="flex gap-2 relative">
+                    <button onclick="shareResults()"
+                        class="flex cursor-pointer items-center justify-center rounded-xl h-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-3 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">share</span>
+                    </button>
+                    <!-- Dropdown Button -->
+                    <button onclick="toggleDropdown()"
+                        class="flex cursor-pointer items-center justify-center rounded-xl h-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-3 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">more_horiz</span>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div id="options-dropdown"
+                        class="hidden absolute right-0 top-12 mt-2 w-56 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 z-50 overflow-hidden text-sm">
+                        <div class="py-1">
+                            <a href="/"
+                                class="flex items-center gap-2 px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors bg-slate-50 dark:bg-slate-700/30">
+                                <span class="material-symbols-outlined text-[18px]">home</span>
+                                <span class="font-medium text-primary">Home</span>
+                            </a>
+                            <a href="/scan"
+                                class="flex items-center gap-2 px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">document_scanner</span>
+                                <span class="font-medium">Scan Sneaker</span>
+                            </a>
+                            <a href="/history"
+                                class="flex items-center gap-2 px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">history</span>
+                                <span class="font-medium">My Dashboard / History</span>
+                            </a>
+                            <a href="/login"
+                                class="flex items-center gap-2 px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">login</span>
+                                <span class="font-medium">Sign in / Login</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="px-6 lg:px-40 py-12 flex justify-center">
+                <div class="layout-content-container flex flex-col max-w-[960px] flex-1 items-center">
+
+                    <!-- Hero Section -->
+                    <div class="text-center w-full max-w-2xl mb-12">
+                        <div
+                            class="inline-flex items-center justify-center p-2 mb-6 bg-primary/10 rounded-2xl text-primary">
+                            <span class="material-symbols-outlined text-4xl">verified</span>
+                        </div>
+                        <h1
+                            class="text-4xl md:text-5xl font-extrabold leading-tight text-slate-900 dark:text-white mb-4">
+                            Spot the difference in <span class="text-primary">seconds.</span>
+                        </h1>
+                        <p class="text-slate-500 dark:text-slate-400 text-lg">
+                            Find out if your Adidas sneakers are authentic in seconds. We analyze the design, materials,
+                            and shape to give you a reliable result.
+                        </p>
+                    </div>
+
+                    <!-- How to use Steps -->
+                    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+
+                        <!-- Step 1 -->
+                        <div
+                            class="flex flex-col gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+                            <div
+                                class="absolute -right-4 -top-4 text-[100px] font-black text-slate-50 dark:text-slate-800/50 -z-10 group-hover:scale-110 transition-transform">
+                                1</div>
+                            <div
+                                class="size-12 flex items-center justify-center bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl">
+                                <span class="material-symbols-outlined">add_a_photo</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Upload Photo</h3>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Take a clear
+                                    picture of the side profile and logo of your Adidas sneakers and upload it to our
+                                    system.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div
+                            class="flex flex-col gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+                            <div
+                                class="absolute -right-4 -top-4 text-[100px] font-black text-slate-50 dark:text-slate-800/50 -z-10 group-hover:scale-110 transition-transform">
+                                2</div>
+                            <div
+                                class="size-12 flex items-center justify-center bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-xl">
+                                <span class="material-symbols-outlined">memory</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">AI Analysis</h3>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Our tech scans
+                                    your photo and compares the hidden details—like stitching and shape—against
+                                    thousands of verified authentic pairs.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div
+                            class="flex flex-col gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+                            <div
+                                class="absolute -right-4 -top-4 text-[100px] font-black text-slate-50 dark:text-slate-800/50 -z-10 group-hover:scale-110 transition-transform">
+                                3</div>
+                            <div
+                                class="size-12 flex items-center justify-center bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-xl">
+                                <span class="material-symbols-outlined">task_alt</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Get Results</h3>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Receive a detailed
+                                    breakdown including the detected model, color, and an authenticity confidence score.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Call to action -->
+                    <a href="/scan"
+                        class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-white text-lg font-bold rounded-xl hover:bg-blue-600 hover:shadow-lg hover:shadow-primary/30 transition-all group">
+                        Start Scanning <span
+                            class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+                    </a>
+
+                </div>
+            </main>
+
+            <footer
+                class="mt-auto py-8 text-center text-slate-400 text-sm border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <p>Powered by AI Authentication System</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Toggle dropdown visibility
+        function toggleDropdown() {
+            const dropdown = document.getElementById('options-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const dropdown = document.getElementById('options-dropdown');
+            const button = event.target.closest('button');
+
+            if (!dropdown.classList.contains('hidden') &&
+                (!button || button.getAttribute('onclick') !== 'toggleDropdown()') &&
+                !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Share Feature
+        function shareResults() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Adidas Authentication Tool',
+                    text: 'Authenticate your Adidas sneakers anywhere, anytime using AI.',
+                    url: window.location.href
+                })
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Website link copied to clipboard!');
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>
