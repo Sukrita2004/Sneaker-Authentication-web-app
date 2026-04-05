@@ -1,2 +1,4 @@
 # Sneaker-Authentication-web-application-
-# Sneaker-Authentication-web-application-
+
+python3 app.py
+
