@@ -20,6 +20,6 @@ Ensure all your reference logo images (e.g., default_logo.jpg, adidas_samba_logo
 
 python3 app.py
 
-Open http://127.0.0.1:5000 in your browser.
+Open http://127.0.0.1:7860 in your browser.
 
 Sukrita Chaoyong
